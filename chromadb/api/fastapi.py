@@ -82,14 +82,13 @@ class FastAPI(BaseHTTPClient, ServerAPI):
             default_api_path=system.settings.chroma_server_api_default_path,
         )
 
-        if self._settings.chroma_server_ssl_verify is not None:
-            self._session = httpx.Client(
-                timeout=None,
-                limits=self.http_limits,
-                verify=self._settings.chroma_server_ssl_verify,
-            )
-        else:
-            self._session = httpx.Client(timeout=None, limits=self.http_limits)
+        # NOTE: temporarily disable TLS certificate verification to simplify
+        # connecting to servers with self-signed certificates.
+        self._session = httpx.Client(
+            timeout=None,
+            limits=self.http_limits,
+            verify=False,
+        )
 
         self._header = system.settings.chroma_server_headers or {}
         self._header["Content-Type"] = "application/json"

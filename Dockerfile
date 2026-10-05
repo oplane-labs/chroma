@@ -1,4 +1,4 @@
-FROM python:3.11-slim-bookworm AS builder
+FROM python:3.12-slim-bookworm AS builder
 ARG REBUILD_HNSWLIB
 ARG PROTOC_VERSION=31.1
 RUN apt-get update --fix-missing && apt-get install -y --fix-missing \
@@ -67,7 +67,7 @@ RUN --mount=type=cache,sharing=locked,target=/root/.cargo/registry/ \
     python3 -m maturin build --out /wheels
 RUN pip install --prefix="/install" --no-deps /wheels/*.whl
 
-FROM python:3.11-slim-bookworm AS final
+FROM python:3.12-slim-bookworm AS final
 
 # Create working directory
 RUN mkdir -p /chroma/chromadb

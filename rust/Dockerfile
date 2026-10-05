@@ -70,7 +70,7 @@ RUN --mount=type=cache,sharing=locked,target=/chroma/target/ \
   cp "target/${build_dir}/${bin}" "./${bin}"; \
   done
 
-FROM debian:stable-slim AS runner
+FROM debian:bookworm-slim AS runner
 ARG ADDRESS_SANITIZER
 
 ENV ASAN_OPTIONS=${ADDRESS_SANITIZER:+'symbolize=1'}

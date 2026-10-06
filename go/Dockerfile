@@ -1,7 +1,7 @@
-FROM golang:bookworm AS builder
+FROM golang:1.24-bookworm AS builder
 ARG PROTOC_VERSION=31.1
 WORKDIR /build-dir
-RUN apt-get update && apt-get install -y make git bash protobuf-compiler unzip curl
+RUN apt-get update && apt-get install -y make git bash build-essential protobuf-compiler unzip curl
 
 RUN ARCH=$(uname -m) && \
   if [ "$ARCH" = "x86_64" ]; then \
